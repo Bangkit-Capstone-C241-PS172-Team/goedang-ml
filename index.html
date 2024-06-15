@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TensorFlow.js Prediction</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.1.0"></script>
-    <script src="./scripts.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="script.js"></script>
 </head>
 <body>
     <h1>TensorFlow.js Prediction</h1>
     <button id="predict-button">Predict</button>
-    <script>
-        document.getElementById("predict-button").addEventListener("click", () => {
-            predict();
-        });
-    </script>
+    <div id="prediction"></div>
 </body>
 </html>

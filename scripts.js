@@ -1,5 +1,5 @@
 async function loadModel() {
-    const model = await tf.loadLayersModel('../models/tfjs_model/model.json');
+    const model = await tf.loadLayersModel('./models/tfjs_model/model.json');
     return model;
 }
 
@@ -49,6 +49,8 @@ async function predict() {
     const prediction = model.predict(inputTensor);
     const predictionArray = await prediction.array();
 
-    // Tampilkan hasil prediksi dalam alert
-    alert(`Prediction: ${predictionArray[0][0]}`);
+    // Tampilkan hasil prediksi dalam elemen HTML
+    document.getElementById('prediction').innerText = `Prediction: ${predictionArray[0][0]}`;
 }
+
+document.getElementById('predict-button').addEventListener('click', predict);
