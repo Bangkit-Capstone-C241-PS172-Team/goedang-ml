@@ -37,13 +37,39 @@ def forecast():
         
         model, scaler = load_model(item)
 
-        date_series = pd.to_datetime(dates)
+        date_series = pd.to_datetime(dates, format='mixed')
         date_difference  = (date_series.max() - date_series.min()).days
         
         if (date_difference < WINDOW_SIZE - 1) or (len(harga) < THRESHOLD or len(dates) < THRESHOLD):
             return jsonify({"message": "Data tidak cukup untuk melakukan forecasting"})
         
-        last_window = np.array(harga[-WINDOW_SIZE:]).reshape(1, WINDOW_SIZE, 1)
+        df = pd.DataFrame({
+            'tanggal': date_series,
+            'harga': harga
+        })
+        
+        df['harga'] = df['harga'].astype(float)
+
+        df = df.sort_values(by='tanggal')
+        df.set_index('tanggal', inplace=True)
+        
+        # Menentukan rentang tanggal lengkap
+        all_dates = pd.date_range(start=df.index.min(), end=df.index.max())
+        
+        df = df.groupby('tanggal').agg({
+            'harga': 'mean',
+        })
+        
+        # Mengulang data agar sesuai dengan rentang tanggal lengkap
+        df = df.reindex(all_dates)
+        df['harga'] = df['harga'].interpolate()
+        
+        # Mengambil data harga 30 hari terakhir
+        data_harga = df[['harga']].values
+        last_window = np.array(data_harga[-WINDOW_SIZE:]).reshape(1, WINDOW_SIZE, 1)
+        
+        print(last_window)
+        
         forecast = []
         input_data = last_window
         
@@ -57,6 +83,7 @@ def forecast():
         next_dates = pd.date_range(start=first_date, periods=STEP_AHEAD)
         
         response = {
+            "item": item,
             "forecast": forecast,
             "dates": next_dates.strftime("%Y-%m-%d").tolist()
         }
