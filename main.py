@@ -22,7 +22,7 @@ model_cmktt, scaler_cmktt = load_model("cmktt")
 model_crmtt, scaler_crmtt = load_model("crmtt")
 model_crptt, scaler_crptt = load_model("crptt")
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def hello_world():
     return "<p>Hello, World!</p>"
 
