@@ -5,7 +5,8 @@ FROM python:3.9-slim
 ENV PYTHONUNBUFFERED True
 # Copy local code to the container image.
 ENV APP_HONE /app
-WORKDIR ./
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
 COPY . ./
 # Install production dependencies.
 RUN pip install Flask gunicorn
