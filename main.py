@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import os
 import pandas as pd
 import pickle
 from flask import Flask, request, jsonify
@@ -11,9 +12,9 @@ WINDOW_SIZE = 10
 STEP_AHEAD = 7
 
 def load_model(name):
-    path=f"models/model_{name}.h5"
+    path= os.path.join("models", f"model_{name}.h5")
     model = tf.keras.models.load_model(path)
-    scaler = pickle.load(open(f"./models/scaler_{name}.pkl", 'rb'))
+    scaler = pickle.load(open(os.path.join("models", f"scaler_{name}.pkl"), 'rb'))
     return model, scaler
 
 model_cmbtt, scaler_cmbtt = load_model("cmbtt") 
@@ -26,7 +27,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@app.route("/forecast-cmbtt", methods=["POST"])
+@app.route("/forecast", methods=["POST"])
 def forecast():
     try:
         data = request.get_json()
