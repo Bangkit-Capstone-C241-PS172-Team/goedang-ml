@@ -9,6 +9,9 @@ WORKDIR ./
 COPY . ./
 # Install production dependencies.
 RUN pip install Flask gunicorn
+RUN pip install tensorflow
+RUN pip install numpy
+RUN pip install pandas
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and & threads.
 # For environments with multiple cPu cores, increase the number of workers
