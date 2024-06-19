@@ -17,14 +17,16 @@ def load_model(name):
     return model, scaler
 
 model_cmbtt, scaler_cmbtt = load_model("cmbtt") 
-
+model_cmktt, scaler_cmktt = load_model("cmktt")
+model_crmtt, scaler_crmtt = load_model("crmtt")
+model_crptt, scaler_crptt = load_model("crptt")
 
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@app.route("/forecast", methods=["POST"])
+@app.route("/forecast-cmbtt", methods=["POST"])
 def forecast():
     try:
         data = request.get_json()
@@ -43,17 +45,17 @@ def forecast():
             forecast.append(prediction[0,0])
             input_data = np.append(input_data[:,1:,:], prediction.reshape(1,1,1), axis=1)
         
-        forecast =scaler_cmbtt.inverse_transform(np.array(forecast).reshape(-1,1))
+        forecast =scaler_cmbtt.inverse_transform(np.array(forecast).reshape(-1,1)).flatten().tolist()
         next_dates = pd.date_range(start=dates[-1],periods=STEP_AHEAD)
         
         response = {
-            "forecast": forecast.tolist(),
+            "forecast": forecast,
             "dates": next_dates.strftime("%Y-%m-%d").tolist()
         }
         return jsonify(response)
     
     except Exception as e:
-        return jsonify({"message": str(e)})
+        return jsonify({"message": str(e)}) 
             
         
 
