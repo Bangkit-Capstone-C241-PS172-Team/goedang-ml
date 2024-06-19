@@ -33,9 +33,9 @@ def forecast():
         harga = data["harga"]
         dates = data["tanggal"]
         
-        item = item.replace(" ", "_").lower()
+        item_name = item.replace(" ", "_").lower()
         
-        model, scaler = load_model(item)
+        model, scaler = load_model(item_name)
 
         date_series = pd.to_datetime(dates, format='mixed')
         date_difference  = (date_series.max() - date_series.min()).days
