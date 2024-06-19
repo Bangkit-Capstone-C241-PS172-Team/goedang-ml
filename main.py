@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 WINDOW_SIZE = 30
 STEP_AHEAD = 7
+THRESHOLD = 20
 
 def load_model(name):
     path=f"models/model_{name}.h5"
@@ -35,8 +36,11 @@ def forecast():
         item = item.replace(" ", "_").lower()
         
         model, scaler = load_model(item)
+
+        date_series = pd.to_datetime(dates)
+        date_difference  = (date_series.max() - date_series.min()).days
         
-        if len(harga) < WINDOW_SIZE or len(dates) < WINDOW_SIZE:
+        if (date_difference < WINDOW_SIZE - 1) or (len(harga) < THRESHOLD or len(dates) < THRESHOLD):
             return jsonify({"message": "Data tidak cukup untuk melakukan forecasting"})
         
         last_window = np.array(harga[-WINDOW_SIZE:]).reshape(1, WINDOW_SIZE, 1)
