@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 import pickle
+import os
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -31,8 +32,7 @@ def forecast():
         harga = data["harga"]
         dates = data["tanggal"]
         
-        if item is None or harga is None or dates is None:
-            return jsonify({"message": "Data tidak lengkap"})
+        item = item.replace(" ", "_").lower()
         
         model, scaler = load_model(item)
         
@@ -57,11 +57,8 @@ def forecast():
             "dates": next_dates.strftime("%Y-%m-%d").tolist()
         }
         return jsonify(response)
-    
     except Exception as e:
         return jsonify({"message": str(e)})
-            
-        
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
