@@ -15,4 +15,5 @@ RUN pip install Flask gunicorn
 # to be equal to the cores available.
 # Timeout is set to e to disable the timeouts of the workers to allow cloud Run to handle instance scaling.
 #CMD ["exec", "gunicorn", "--bind", ":$PORT", "--workers", "1", "--threads", "8", "--timeout", "0", "main:app"]
-CMD ["python", "main.py"]
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
+#CMD ["python", "main.py"]
