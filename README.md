@@ -6,10 +6,10 @@ With this feature, Goedang will enable businesses to streamline their inventory 
 and implement better decision-making processes so that they can drive growth and profitability.
 
 ## Data Understanding
-Dataset digunakan adalah data perusahaan pertanian, dapat diakses di link berikut:  [Book Recommendation Dataset](https://docs.google.com/spreadsheets/d/18YY5jS95EebTn-KL7aOiyg-g07afwsVUZrsojaxfQTs/edit?usp=sharing)
+The dataset used is agricultural company data, accessible at the following link:  [Dataset](https://docs.google.com/spreadsheets/d/18YY5jS95EebTn-KL7aOiyg-g07afwsVUZrsojaxfQTs/edit?usp=sharing)
 
 ## Result
-Pada Modelling sistem menggunakan Layer LSTM seperti berikut:
+In the system modeling, LSTM layers are used as follows:
 ```python
 model = Sequential([
   LSTM(units = 64, return_sequences = True, input_shape = [None, 1], activation='tanh'),
@@ -23,11 +23,11 @@ model = Sequential([
   Dense(1),
 ])
 ```
-dengan loss: '0.0014" - mae: '0.0384' - val_loss: '7.5870e-04' - 'val_mae: 0.0261'
+with loss: '0.0014" - mae: '0.0384' - val_loss: '7.5870e-04' - 'val_mae: 0.0261'
 
 ## Testing
-Untuk menggunakan Testing Forecasting API kita dapat mengakses pada link berikut : [Forecast](https://dep-prep-lh5lfcq2da-et.a.run.app/forecast)
-jika dengan input sebagai contoh pada link berikut:
+To use the Testing Forecasting API, you can access it at the following link : 'https://dep-prep-lh5lfcq2da-et.a.run.app/forecast'
+if with input as an example at the following link:
 
 [Postman API](https://documenter.getpostman.com/view/36443503/2sA3XV7KAt)
 
