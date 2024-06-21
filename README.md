@@ -26,7 +26,7 @@ model = Sequential([
 with loss: '0.0014" - mae: '0.0384' - val_loss: '7.5870e-04' - 'val_mae: 0.0261'
 
 ## Testing
-To use the Testing Forecasting API, you can access it at the following link : 'https://dep-prep-lh5lfcq2da-et.a.run.app/forecast'
+To use the Testing Forecasting API, you can access it at the following link : 'https://dep-prep-lh5lfcq2da-et.a.run.app/forecast'<br>
 if with input as an example at the following link:
 
 [Postman API](https://documenter.getpostman.com/view/36443503/2sA3XV7KAt)
